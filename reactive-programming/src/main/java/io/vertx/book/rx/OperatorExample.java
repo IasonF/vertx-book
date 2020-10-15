@@ -1,6 +1,6 @@
 package io.vertx.book.rx;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * An example using RX operators
