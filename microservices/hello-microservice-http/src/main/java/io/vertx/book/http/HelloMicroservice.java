@@ -14,7 +14,7 @@ public class HelloMicroservice extends AbstractVerticle {
         router.get("/").handler(this::hello);
         router.get("/:name").handler(this::hello);
         vertx.createHttpServer()
-            .requestHandler(router::accept)
+            .requestHandler(router)
             .listen(8080);
     }
 

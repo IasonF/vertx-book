@@ -11,7 +11,14 @@ public class OperatorExample {
         // Create a stream of integer [0..20]
         Observable<Integer> observable = Observable.range(0, 21);
         Observable<Integer> anotherObservable = Observable.range(0, 21);
-
+        
+        System.out.println("Start series:");
+		Observable<Double> unboundSeries = Observable.fromCallable(() -> Math.random()*100);
+		unboundSeries.subscribe(data -> {System.out.println(data);}, OnError -> {}, ()->{});
+		Observable<Integer> integers = unboundSeries.map(i -> i.intValue());
+		integers.subscribe(System.out::println);
+		System.out.println("End series.");
+		
         observable
             .map(i -> i + 1)
             .zipWith(anotherObservable, (a, b) -> a + b)

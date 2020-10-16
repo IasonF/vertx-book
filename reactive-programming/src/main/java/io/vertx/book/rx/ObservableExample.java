@@ -29,6 +29,16 @@ public class ObservableExample {
 			}
 		};
 		Observable<String> observable2 = Observable.fromCallable(callable);
+		
+		Callable<String> callable2 = new Callable<String>() {
+
+			@Override
+			public String call() throws Exception {
+				throw new Error("An error occurs in the observable");
+			}
+		};
+		
+		Observable<String> observable4 = Observable.fromCallable(callable2);
 
 		observable.subscribe(data -> {
 			// Called with the next data available in the stream
@@ -43,7 +53,7 @@ public class ObservableExample {
 
 		observable3.subscribe(data -> {System.out.println(data);
 		}, error -> {System.out.println("Error!!!");
-		}, () -> System.out.println("dfjiw"));
+		}, () -> System.out.println("The end"));
 		
 
 		String firstObservableString = observable2.blockingFirst();
@@ -51,6 +61,14 @@ public class ObservableExample {
 		Single<Boolean> all = observable2.all(x -> x.contains("."));
 		Boolean blockingGet = all.blockingGet();
 		System.out.println("All decimals:" + blockingGet);
+		
+		System.out.println();
+		System.out.println("Test 4:");
+		observable4.subscribe(
+				data -> {}, 
+				error -> {System.out.println("An error occured during observation...");},
+				() -> {}
+				);
 	}
 
 }
