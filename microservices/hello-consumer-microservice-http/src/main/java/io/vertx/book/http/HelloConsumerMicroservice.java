@@ -1,6 +1,8 @@
 package io.vertx.book.http;
 
 import io.vertx.rxjava.core.AbstractVerticle;
+
+
 import io.vertx.core.json.JsonObject;
 import io.vertx.rxjava.ext.web.Router;
 import io.vertx.rxjava.ext.web.RoutingContext;
@@ -27,6 +29,7 @@ public class HelloConsumerMicroservice extends AbstractVerticle {
     }
 
     private void invokeMyFirstMicroservice(RoutingContext rc) {
+    	System.out.println("External request received. Consumer will start sending.");
         HttpRequest<JsonObject> request1 = client
             .get(8080, "localhost", "/Luke")
             .as(BodyCodec.jsonObject());
@@ -34,12 +37,12 @@ public class HelloConsumerMicroservice extends AbstractVerticle {
         HttpRequest<JsonObject> request2 = client
             .get(8080, "localhost", "/Leia")
             .as(BodyCodec.jsonObject());
+       
 
         Single<HttpResponse<JsonObject>> s1 = request1.rxSend();
         Single<HttpResponse<JsonObject>> s2 = request2.rxSend();
 
         Single.zip(s1, s2, (luke, leia) -> {
-            // We have the result of both request in Luke and Leia
             return new JsonObject()
                 .put("luke", luke.body().getString("message"))
                 .put("leia", leia.body().getString("message"));
@@ -48,7 +51,9 @@ public class HelloConsumerMicroservice extends AbstractVerticle {
                 rc.response().end(x.encode());
             },
             t -> {
-                rc.response().end(new JsonObject().encodePrettily());
+                rc.response().end(new JsonObject()
+                		.put("Error:", "something went wrong.")
+                		.encodePrettily());
             });
     }
 

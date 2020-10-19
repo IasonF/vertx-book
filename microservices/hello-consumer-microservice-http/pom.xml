@@ -9,13 +9,13 @@
   
   <properties>
     <vertx.version>3.4.1</vertx.version>
-    <fabric8-vertx-maven-plugin.version>1.0.6</fabric8-vertx-maven-plugin.version>
+    <fabric8-vertx-maven-plugin.version>1.0.13</fabric8-vertx-maven-plugin.version>
     
     <vertx.verticle>io.vertx.book.http.HelloConsumerMicroservice</vertx.verticle>
 
-    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.source>14</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.target>14</maven.compiler.target>
   </properties>
   
   <dependencyManagement>
@@ -51,23 +51,14 @@
   
   <build>
     <plugins>
-      <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>vertx-maven-plugin</artifactId>
-        <version>${fabric8-vertx-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>vmp</id>
-            <goals>
-              <goal>initialize</goal>
-              <goal>package</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <redeploy>true</redeploy>
-        </configuration>
-      </plugin>
-    </plugins>
+		<plugin>
+			<groupId>io.fabric8</groupId>
+			<artifactId>vertx-maven-plugin</artifactId>
+			<version>1.0.13</version>
+			<configuration>
+				<redeploy>true</redeploy>
+			</configuration>
+			</plugin>
+		</plugins>
   </build>
 </project>

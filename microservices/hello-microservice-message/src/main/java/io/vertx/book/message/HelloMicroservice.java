@@ -8,6 +8,7 @@ public class HelloMicroservice extends AbstractVerticle {
     @Override
     public void start() {
         // Receive message from the address 'hello'
+    	System.out.println("Handling the hello address....");
         vertx.eventBus().<String>consumer("hello", message -> {
             JsonObject json = new JsonObject()
                 .put("served-by", this.toString());

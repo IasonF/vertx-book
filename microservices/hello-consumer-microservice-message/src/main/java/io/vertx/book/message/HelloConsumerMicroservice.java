@@ -29,7 +29,8 @@ public class HelloConsumerMicroservice extends AbstractVerticle {
                         )
                         .subscribe(
                             x -> req.response().end(x.encodePrettily()),
-                            t -> req.response().setStatusCode(500).end(t.getMessage())
+                            t -> {System.out.println("where is the handler??");
+                            req.response().setStatusCode(500).end(t.getMessage());}
                         );
                 })
             .listen(8082);

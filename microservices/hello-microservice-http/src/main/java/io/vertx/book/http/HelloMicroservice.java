@@ -19,6 +19,7 @@ public class HelloMicroservice extends AbstractVerticle {
     }
 
     private void hello(RoutingContext rc) {
+    	System.out.println("Request received.");
         String message = "hello";
         if (rc.pathParam("name") != null) {
             message += " " + rc.pathParam("name");
@@ -27,6 +28,7 @@ public class HelloMicroservice extends AbstractVerticle {
         rc.response()
             .putHeader(HttpHeaders.CONTENT_TYPE, "application/json")
             .end(json.encode());
+//        rc.fail(404);
     }
 
 }
